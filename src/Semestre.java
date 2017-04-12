@@ -2,17 +2,17 @@ import java.util.ArrayList;
 
 
 public class Semestre {
-	private ArrayList<Horario> aula = new ArrayList<Horario>();
+	//private ArrayList<Semana> aula = new ArrayList<Semana>();
+	private ArrayList<Disciplina> horarios = new ArrayList<Disciplina>();
 	private String nome = new String();
 	private String horario = new String();
 	
+	public Semestre() {
+		for(int i = 0; i < 30; i++)	
+			this.horarios.add(new Disciplina(null));
+	}
 	
-	public ArrayList<Horario> getAula() {
-		return aula;
-	}
-	public void setAula(ArrayList<Horario> aula) {
-		this.aula = aula;
-	}
+	
 	public String getNome() {
 		return nome;
 	}
