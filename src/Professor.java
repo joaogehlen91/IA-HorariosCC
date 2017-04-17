@@ -6,8 +6,9 @@ public class Professor {
 	private List<String> preferenciaHorarios;
 	
 		
-	public Professor(String nome) {
+	public Professor(String nome, List<String> preferenciaHorarios) {
 		this.nome = nome;
+		this.preferenciaHorarios = preferenciaHorarios;
 	}
 	
 	public String getNome() {
