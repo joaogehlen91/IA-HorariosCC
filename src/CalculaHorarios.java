@@ -27,7 +27,7 @@ public class CalculaHorarios {
 
 			br.readLine();
 			while((linha = br.readLine()).length() > 0){
-				//addSemestre(linha);
+				addSemestre(linha);
 			}
 
 			br.readLine();
@@ -41,7 +41,7 @@ public class CalculaHorarios {
 			h.setAula(8, ds);
 			h.printHorarioss();
 */			
-			
+			br.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -52,47 +52,27 @@ public class CalculaHorarios {
 		
 	
 	public static Professor montaProfessor(String linha){
-		String nome = "";
-		linha = linha.replace(" ", "");
-		List<String> preferenciaHorarios = new ArrayList<String>();
+		String nome = linha.substring(0, 9).replace(" ", "");
+		List<String> horarios = new ArrayList<String>();
 		
-		for (int i = 0; i < linha.length(); i++){
-			char chr = linha.charAt(i);
-			if (Character.isLetter(chr)){
-				nome = nome + chr;
-			}
-			if (Character.isDigit(chr)){
-				for (int j = i + 1; j < linha.length(); j+=2){
-					char h1 = linha.charAt(j);
-					char h2 = linha.charAt(j+1);
-					String horario = h1+""+h2;
-					preferenciaHorarios.add(horario);
-				}
-				break;
-			}
+		for (int i = 12; i < linha.length(); i+=3) {
+			horarios.add(linha.substring(i, i+2));
 		}
-		
-		Professor p = new Professor(nome, preferenciaHorarios);
+		System.out.println(nome+": "+horarios);
+		Professor p = new Professor(nome, horarios);
 		return p;
 	}
 	
 	private static void addSemestre(String linha){
-		System.out.println(linha);
 		String nome = linha.substring(0, 6);
 		List<String> horarios = new ArrayList<String>();
 		
-		for (int i = 7; i < linha.length(); i++){
-			char chr = linha.charAt(i);
-			if (Character.isDigit(chr)){
-				for (int j = i + 1; j < linha.length(); j+=2){
-					char h1 = linha.charAt(j);
-					char h2 = linha.charAt(j+1);
-					String horario = h1+""+h2;
-					horarios.add(horario);
-				}
-			}
+		for (int i = 10; i < linha.length(); i+=3) {
+			horarios.add(linha.substring(i, i+2));
 		}
+		System.out.println(nome+": "+horarios);
 	}
+	
 	
 	private static void addDisciplina(String linha){
 		System.out.println(linha);
