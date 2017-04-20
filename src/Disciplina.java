@@ -1,38 +1,39 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Disciplina {
 
-	private String nome;
+
+	public String nome;
+	public String codSemestre;
+	public String quantidadeCredito;
+	public String professor;
 	
-	ArrayList<Professor> prof = new ArrayList<Professor>();
-	
-	
-	public Disciplina(String nome){
+
+	public Disciplina(String nome, String codS, String qt, String professor){
 		this.nome = nome;
-	}
-
-
-	public String getNome() {
-		return nome;
+		this.codSemestre = codS;
+		this.quantidadeCredito = qt;
+		this.professor = professor;
 	}
 
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public void setCodSemestre(String n) {
+		this.codSemestre = n;
+	}
 
+	
 
-	public List<Professor> getProf() {
-		return prof;
+	public String getNome() {
+		return this.nome;
+	}
+	public String getCodSemestre(){
+		return this.codSemestre;
 	}
 
 
-	public void setProf(Professor prof) {
-		this.prof.add(prof);
-	}
-	
-	
-	
+
 }

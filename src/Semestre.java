@@ -2,14 +2,14 @@ import java.util.ArrayList;
 
 
 public class Semestre {
-	//private ArrayList<Semana> aula = new ArrayList<Semana>();
-	private ArrayList<Disciplina> horarios = new ArrayList<Disciplina>();
-	private String nome = new String();
-	private String horario = new String();
+	public ArrayList<String> horDisponiveis = new ArrayList<String>();
+	public String nome = new String();
+	public String quantidade;
+	public String professor;
 	
-	public Semestre() {
-		for(int i = 0; i < 30; i++)	
-			this.horarios.add(new Disciplina(null));
+	public Semestre(String nome, ArrayList<String> horDisponiveis) {
+		this.horDisponiveis = horDisponiveis;
+		this.nome = nome;
 	}
 	
 	
@@ -19,18 +19,5 @@ public class Semestre {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getHorario() {
-		return horario;
-	}
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
 	
-	
-	
-	
-	
-	
-	
-
 }
