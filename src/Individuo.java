@@ -11,7 +11,7 @@ public class Individuo {
 			//System.out.println(c.semestre);
 			System.out.println("semestre: "+f.nome);
 			for (Map.Entry<String, Disciplina> entry : f.horarios.entrySet()){
-			    System.out.println(entry.getKey() + "/" + entry.getValue().nome);
+			    System.out.println(entry.getKey() + "/" + entry.getValue().nome+ "/" +entry.getValue().professor.nome);
 			}
 		}
 	}
@@ -22,17 +22,32 @@ public class Individuo {
 	
 	public int verificaPrefUm(Fase f, String chave1, String chave2){
 		if(f.horarios.containsKey(chave1) && f.horarios.containsKey(chave2)){
-			return 10;
+			if(f.horarios.get(chave1).professor.nome.equals(f.horarios.get(chave2).professor.nome)){
+				return 10;
+			}			
 		}
 		return 0;
 	}
 	
 	public int verificaPrefDois(Fase f1, Fase f2, String mat1, String mat2, String not1, String not2){
-		if((f1.horarios.containsKey(mat1) || f1.horarios.containsKey(mat2))
-			&& (f2.horarios.containsKey(not1) || f2.horarios.containsKey(not2))	){
-			return 5;
-		}
-		return 0;
+		int x = 0;
+		if(f1.horarios.containsKey(mat1) && f2.horarios.containsKey(not1))
+			if(f1.horarios.get(mat1).professor.nome.equals(f2.horarios.get(not1).professor.nome))
+				x += 2;
+		
+		if(f1.horarios.containsKey(mat1) && f2.horarios.containsKey(not2))	
+			if(f1.horarios.get(mat1).professor.nome.equals(f2.horarios.get(not2).professor.nome))
+				x += 2;
+		
+		if(f1.horarios.containsKey(mat2) && f2.horarios.containsKey(not1))
+			if(f1.horarios.get(mat2).professor.nome.equals(f2.horarios.get(not1).professor.nome))
+				x += 2;
+		
+		if(f1.horarios.containsKey(mat2) && f2.horarios.containsKey(not2))
+			if(f1.horarios.get(mat2).professor.nome.equals(f2.horarios.get(not2).professor.nome))
+				x += 2;
+		
+		return x;
 	}
 	
 	public int verificaPrefTres(String horario, List<String> preferencias){

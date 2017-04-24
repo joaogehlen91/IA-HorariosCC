@@ -11,6 +11,7 @@ public class CalculaHorarios {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
 		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		ArrayList<Semestre> semestres = new ArrayList<Semestre>();
+		int maxGenerations = 10;
 
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 
@@ -44,9 +45,16 @@ public class CalculaHorarios {
 
 		Populacao populacao = new Populacao(professores, semestres, disciplinas);
 		populacao.geraPopulacao();
-		populacao.imprimePopulacaoComFitness();	
+			
+		
+		for (int i = 0; i < maxGenerations ; i++)
+			
+			populacao.cruzamento();
+		
+		populacao.imprimePopulacaoComFitness();
 		
 	}
+	
 	
 	public static Professor getProfessorPorNome(String nome, ArrayList<Professor> professores){
 		for (Professor p : professores){
@@ -72,7 +80,7 @@ public class CalculaHorarios {
 		String[] parts = linha.split(" +");
 		String nome = parts[0];
 		ArrayList<String> horarios = new ArrayList<String>();
-		for (int i = 2; i < parts.length; i+=1) {
+		for (int i = 3; i < parts.length; i+=1) {
 			horarios.add(parts[i]);
 		}
 		//System.out.println(nome+": "+horarios);
