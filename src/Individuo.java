@@ -1,164 +1,110 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Individuo {
-	public ArrayList<Fase> curso = new ArrayList<Fase>();
-	
-	
-	public Individuo(){
-		
-		//for i in horDisponiveis:
-
-	}
+	public ArrayList<Fase> fases = new ArrayList<Fase>();
+	public int fitness;
 	
 	public void imprimeIndividuo(){
-		for (Fase c : curso){
+		for (Fase f : fases){
 			//System.out.println(c.semestre);
-			System.out.println("semestre ---------");
-			for (Map.Entry<String, Disciplina> entry : c.semestre.entrySet()){
-				System.out.println(entry.getValue().codSemestre );
+			System.out.println("semestre: "+f.nome);
+			for (Map.Entry<String, Disciplina> entry : f.horarios.entrySet()){
 			    System.out.println(entry.getKey() + "/" + entry.getValue().nome);
 			}
 		}
-	
 	}
 	
-	
-	public Double fitness(){
-		Double fitness = 0.0;
-		
-		
-		//RESTRICAO MAXIMA
-		for (Fase c : curso) {
-			if(c.semestre.containsKey("21") && c.semestre.containsKey("02")){
-				System.out.println(c.semestre.get("21").professor);
-				System.out.println(c.semestre.get("02").professor);
-				fitness += 100;
-			}
-			
-			if(c.semestre.containsKey("23") && c.semestre.containsKey("04")){
-				System.out.println(c.semestre.get("23").professor);
-				System.out.println(c.semestre.get("04").professor);
-				fitness += 100;
-			}
-			
-			if(c.semestre.containsKey("25") && c.semestre.containsKey("06")){
-				System.out.println(c.semestre.get("25").professor);
-				System.out.println(c.semestre.get("06").professor);
-				fitness += 100;
-			}
-			
-			if(c.semestre.containsKey("27") && c.semestre.containsKey("08")){
-				System.out.println(c.semestre.get("27").professor);
-				System.out.println(c.semestre.get("08").professor);
-				fitness += 100;
-			}
-		}
-		//####################
-		
-		
-		
-		//PREFERENCIAS
-
-		
-		
-		
-		
-		for (Fase c : curso) {
-			
-			// pesquisar em todos os cursos
-			/*for (Map.Entry<String, Disciplina> entry : c.semestre.entrySet()){
-				System.out.println(entry.getValue().codSemestre );
-			    System.out.println(entry.getKey() + "/" + entry.getValue().nome);
-			}*/
-			
-			
-			//criar funcao para verificar choque de horarios proximos
-			
-			//criar funcao para verificar aula manha e noite no mesmo dia
-			
-			//criar funcao para vericicar preferecias dos professores
-			
-			if(c.semestre.containsKey("00") && c.semestre.containsKey("01")){
-				if(c.semestre.get("00").professor.equals(c.semestre.get("01").professor))
-					fitness += 1;
-					
-			}
-			if(c.semestre.containsKey("02") && c.semestre.containsKey("03")){
-				if(c.semestre.get("02").professor.equals(c.semestre.get("03").professor))
-					fitness += 1;
-				
-			}
-			if(c.semestre.containsKey("04") && c.semestre.containsKey("05")){
-				
-			}
-			if(c.semestre.containsKey("06") && c.semestre.containsKey("07")){
-				
-			}
-			if(c.semestre.containsKey("08") && c.semestre.containsKey("09")){
-				
-			}
-			
-			if(c.semestre.containsKey("10") && c.semestre.containsKey("11")){
-				
-			}
-			if(c.semestre.containsKey("12") && c.semestre.containsKey("13")){
-				
-			}
-			if(c.semestre.containsKey("14") && c.semestre.containsKey("15")){
-				
-			}
-			if(c.semestre.containsKey("16") && c.semestre.containsKey("17")){
-				
-			}
-			if(c.semestre.containsKey("18") && c.semestre.containsKey("19")){
-				
-			}
-			
-			if(c.semestre.containsKey("20") && c.semestre.containsKey("21")){
-				
-			}
-			if(c.semestre.containsKey("22") && c.semestre.containsKey("23")){
-				if(c.semestre.get("22").professor.equals(c.semestre.get("23").professor))
-					System.out.println("Sim");
-				else
-					System.out.println("Não");
-				
-			}
-			if(c.semestre.containsKey("24") && c.semestre.containsKey("25")){
-				
-			}
-			if(c.semestre.containsKey("26") && c.semestre.containsKey("27")){
-				
-			}
-			if(c.semestre.containsKey("28") && c.semestre.containsKey("29")){
-				
-			}
-			
-
-			
-		}
-		
-
-		
-		
-		
-		//###################
-		
-		
-		
-		
-		return fitness;
-		
+	public void imprimeFitness(){
+		System.out.println("Fitness: "+this.fitness);
 	}
 	
+	public int verificaPrefUm(Fase f, String chave1, String chave2){
+		if(f.horarios.containsKey(chave1) && f.horarios.containsKey(chave2)){
+			return 10;
+		}
+		return 0;
+	}
 	
+	public int verificaPrefDois(Fase f1, Fase f2, String mat1, String mat2, String not1, String not2){
+		if((f1.horarios.containsKey(mat1) || f1.horarios.containsKey(mat2))
+			&& (f2.horarios.containsKey(not1) || f2.horarios.containsKey(not2))	){
+			return 5;
+		}
+		return 0;
+	}
+	
+	public int verificaPrefTres(String horario, List<String> preferencias){
+		if(preferencias.contains(horario)){
+			return 1;
+		}
+		return 0;
+	}
+	
+	public void calculaFitness(){
+		
+		///////////////////RESTRICOES////////////////////////////////////////////////////////////////
+		for (Fase c : fases) {
+			if(c.horarios.containsKey("21") && c.horarios.containsKey("02")){
+				this.fitness += 1000;
+			}
+			if(c.horarios.containsKey("23") && c.horarios.containsKey("04")){
+				this.fitness += 1000;
+			}
+			if(c.horarios.containsKey("25") && c.horarios.containsKey("06")){
+				this.fitness += 1000;
+			}
+			if(c.horarios.containsKey("27") && c.horarios.containsKey("08")){
+				this.fitness += 1000;
+			}
+		}
+		///////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		/////////////////PREFERENCIAS//////////////////////////////////////////////////////////////////
+		// De preferência os professores não devem ministrar 4 perı́odos con-
+		//secutivos no mesmo turno
+		for (Fase f : fases){
+			this.fitness += verificaPrefUm(f, "00", "01");
+			this.fitness += verificaPrefUm(f, "02", "03");
+			this.fitness += verificaPrefUm(f, "04", "05");
+			this.fitness += verificaPrefUm(f, "06", "07");
+			this.fitness += verificaPrefUm(f, "08", "09");
+			this.fitness += verificaPrefUm(f, "10", "11");
+			this.fitness += verificaPrefUm(f, "12", "13");
+			this.fitness += verificaPrefUm(f, "14", "15");
+			this.fitness += verificaPrefUm(f, "16", "17");
+			this.fitness += verificaPrefUm(f, "18", "19");
+			this.fitness += verificaPrefUm(f, "20", "21");
+			this.fitness += verificaPrefUm(f, "22", "23");
+			this.fitness += verificaPrefUm(f, "24", "25");
+			this.fitness += verificaPrefUm(f, "26", "27");
+			this.fitness += verificaPrefUm(f, "28", "29");
+			
+		}
+	
+		// De preferência os professores não devem ministras aulas no perı́odo
+		//matinal e noturno no mesmo dia
+		for (int i=0; i < fases.size(); i++){
+			for (int j=i+1; j < fases.size(); j++){
+				this.fitness += verificaPrefDois(fases.get(i), fases.get(j), "00", "01", "20", "21");
+				this.fitness += verificaPrefDois(fases.get(i), fases.get(j), "02", "03", "22", "23");
+				this.fitness += verificaPrefDois(fases.get(i), fases.get(j), "04", "05", "24", "25");
+				this.fitness += verificaPrefDois(fases.get(i), fases.get(j), "06", "07", "26", "27");
+				this.fitness += verificaPrefDois(fases.get(i), fases.get(j), "08", "09", "28", "29");
+				//System.out.println(i+"--"+j+"--"+fases.get(i).nome+"--"+fases.get(j).nome);
+			}
+		}
+		
+		//De preferência os professores não devem ministrar aulas nos perı́odos
+		//que eles solicitaram não ministrar aulas.
+		for (Fase f : fases){
+			for (Map.Entry<String, Disciplina> entry : f.horarios.entrySet()){
+				this.fitness += verificaPrefTres(entry.getKey(), entry.getValue().professor.preferenciaHorarios);
+			}
+		}
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+		
+	}
 }
-
-/*De preferˆencia os professores n˜ao devem ministrar 4 per´ıodos consecutivos
-no mesmo turno
-– De preferˆencia os professores n˜ao devem ministras aulas no per´ıodo
-matinal e noturno no mesmo dia
-– de preferˆencia os professores n˜ao devem ministrar aulas nos per´ıodos
-que eles solicitaram n˜ao ministrar aulas.
-*/

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Semestre {
 	public ArrayList<String> horDisponiveis = new ArrayList<String>();
 	public String nome = new String();
@@ -11,13 +10,4 @@ public class Semestre {
 		this.horDisponiveis = horDisponiveis;
 		this.nome = nome;
 	}
-	
-	
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
 }

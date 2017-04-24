@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Fase {
-	Map<String, Disciplina> semestre = new HashMap<String, Disciplina>();
+	public String nome;
+	public Map<String, Disciplina> horarios = new HashMap<String, Disciplina>();
 	
 }
-

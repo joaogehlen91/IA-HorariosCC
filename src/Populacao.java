@@ -15,40 +15,39 @@ public class Populacao {
 		this.disciplinas = disciplinas;
 	}
 
-	
 	private Individuo geraIndividuo(){
-		System.out.println("Individuo ------------");
+		//System.out.println("Individuo ------------");
 		Individuo ind = new Individuo();
 		for (Semestre sem : semestres){
 			//System.out.print(sem.nome+": ");
-			
-			Fase curso = new Fase();
+			Fase fase = new Fase();
+			fase.nome = sem.nome;
 			ArrayList<Disciplina> discDisp = new ArrayList<Disciplina>();
-			discDisp = pegaDisciplinas(sem.nome);  
+			discDisp = pegaDisciplinas(sem.nome); 
+			//System.out.println(sem.nome);
+			ArrayList<String> horariosSem = new ArrayList<String>(sem.horDisponiveis);
 			long seed = System.nanoTime();
-			Collections.shuffle(discDisp, new Random(seed));
-			for (String hd : sem.horDisponiveis) {
+			Collections.shuffle(horariosSem, new Random(seed));
+			//System.out.println(discDisp.size()+"--"+sem.horDisponiveis.size());
+			for (Disciplina disciplina : discDisp) {
+				//if (horariosSem.size() < 1) break;
+				//System.out.print(horariosSem.get(0)+"--"+disciplina.nome+"--"+disciplina.professor.getNome()+"\n");
+				fase.horarios.put(horariosSem.get(0), disciplina);
 				
-				//System.out.print(" "+hd+" ");
-				
-				//System.out.print(discDisp.get(0).nome);
-				curso.semestre.put(hd, discDisp.get(0));
-				
-				discDisp.remove(0);
+				horariosSem.remove(0);
 			}
 			
-			ind.curso.add(curso);
+			ind.fases.add(fase);
 			
 		}
 		
-		ind.imprimeIndividuo();
+		//ind.imprimeIndividuo();
 		
-		ind.fitness();
+		ind.calculaFitness();
+		//ind.imprimeFitness();
 		return ind;
 		
-		
 	}
-	
 	
 	public ArrayList<Disciplina> pegaDisciplinas(String nomeSemestre) {
 		ArrayList<Disciplina> disciplinasDisp = new ArrayList<Disciplina>();
@@ -61,16 +60,20 @@ public class Populacao {
 		}
 		
 		return disciplinasDisp;
-		
 	}
 
 
-	public void gera(){
+	public void geraPopulacao(){
 		for(int i=0; i<quantIndividuos; i++){
 			individuos.add(geraIndividuo());
 		}
-		
+	}
+	
+	public void imprimePopulacaoComFitness(){
+		for (Individuo ind : individuos){
+			ind.imprimeIndividuo();
+			ind.imprimeFitness();
+		}
 		
 	}
-
 }

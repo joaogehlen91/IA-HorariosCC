@@ -6,9 +6,6 @@ import java.util.List;
 
 public class CalculaHorarios {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		String fileName = "arquivos/curso.dat";
 		ArrayList<Professor> professores = new ArrayList<Professor>();
@@ -31,14 +28,13 @@ public class CalculaHorarios {
 
 			br.readLine();
 			while((linha = br.readLine()) != null){
-				Disciplina d = montaDisciplina(linha);
+				Disciplina d = montaDisciplina(linha, professores);
 				disciplinas.add(d);
 				if(d.quantidadeCredito.equals("2")){
 					Disciplina d1 = new Disciplina(d.nome, d.codSemestre, d.quantidadeCredito, d.professor);
 					disciplinas.add(d1);					
 				}
 			}
-
 			
 			br.close();
 
@@ -47,17 +43,25 @@ public class CalculaHorarios {
 		}
 
 		Populacao populacao = new Populacao(professores, semestres, disciplinas);
-		populacao.gera();
-			
+		populacao.geraPopulacao();
+		populacao.imprimePopulacaoComFitness();	
 		
+	}
+	
+	public static Professor getProfessorPorNome(String nome, ArrayList<Professor> professores){
+		for (Professor p : professores){
+			if (p.nome.equals(nome))
+				return p;
+		}
+		return null;
 	}
 
 	public static Professor montaProfessor(String linha){
-		String nome = linha.substring(0, 9).replace(" ", "");
+		String[] parts = linha.split(" +");
+		String nome = parts[0];
 		List<String> horarios = new ArrayList<String>();
-		
-		for (int i = 12; i < linha.length(); i+=3) {
-			horarios.add(linha.substring(i, i+2));
+		for (int i = 2; i < parts.length; i+=1) {
+			if (parts[i].length() > 0) horarios.add(parts[i]);
 		}
 		//System.out.println(nome+": "+horarios);
 		Professor p = new Professor(nome, horarios);
@@ -65,25 +69,26 @@ public class CalculaHorarios {
 	}
 	
 	private static Semestre montaSemestre(String linha){
-		String nome = linha.substring(0, 3).replace(" ","");
+		String[] parts = linha.split(" +");
+		String nome = parts[0];
 		ArrayList<String> horarios = new ArrayList<String>();
-		
-		for (int i = 10; i < linha.length(); i+=3) {
-			horarios.add(linha.substring(i, i+2));
+		for (int i = 2; i < parts.length; i+=1) {
+			horarios.add(parts[i]);
 		}
 		//System.out.println(nome+": "+horarios);
 		Semestre s = new Semestre(nome, horarios);
 		return s;
 	}
 	
-	private static Disciplina montaDisciplina(String linha){
-		String nome = linha.substring(0, 6).replace(" ","");
-		String qt = linha.substring(6,7);
-		String codS = linha.substring(8,11).replace(" ","");
-		String professor = linha.substring(11);
-
+	private static Disciplina montaDisciplina(String linha, ArrayList<Professor> professores){
+		String[] parts = linha.split(" +");
+		String nome = parts[0];
+		String qt = parts[1];
+		String codS = parts[2];
+		Professor professor;
+		professor = getProfessorPorNome(parts[3], professores);
+		//System.out.println(nome+": "+professor);
 		Disciplina d = new Disciplina(nome, codS, qt, professor);
 		return d;
 	}
-
 }
