@@ -7,7 +7,7 @@ public class Populacao {
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	private ArrayList<Semestre> semestres = new ArrayList<Semestre>();
 	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
-	private int quantIndividuos = 2;
+	private int quantIndividuos = 1;
 
 	public Populacao(ArrayList<Professor> professores, ArrayList<Semestre> semestres, ArrayList<Disciplina> disciplinas){
 		this.professores = professores;
@@ -17,17 +17,18 @@ public class Populacao {
 
 	
 	private Individuo geraIndividuo(){
-		
+		System.out.println("Individuo ------------");
 		Individuo ind = new Individuo();
 		for (Semestre sem : semestres){
 			//System.out.print(sem.nome+": ");
-			Curso curso = new Curso();
 			
+			Fase curso = new Fase();
 			ArrayList<Disciplina> discDisp = new ArrayList<Disciplina>();
-			discDisp = pegaDisciplinas(sem.nome);
+			discDisp = pegaDisciplinas(sem.nome);  
 			long seed = System.nanoTime();
 			Collections.shuffle(discDisp, new Random(seed));
 			for (String hd : sem.horDisponiveis) {
+				
 				//System.out.print(" "+hd+" ");
 				
 				//System.out.print(discDisp.get(0).nome);
@@ -35,12 +36,16 @@ public class Populacao {
 				
 				discDisp.remove(0);
 			}
-			System.out.println();
-			ind.semestre.add(curso);
-			ind.imprimeIndividuo();
+			
+			ind.curso.add(curso);
+			
 		}
-		//System.out.println();
-		return new Individuo();
+		
+		ind.imprimeIndividuo();
+		
+		ind.fitness();
+		return ind;
+		
 		
 	}
 	
