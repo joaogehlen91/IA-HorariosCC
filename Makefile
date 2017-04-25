@@ -6,7 +6,7 @@ FLAGS= -cp
 EX = java
 
 all:
-	$(CP) $(FLAGS) $(SRC_DIR)*.java -d $(BIN_DIR)
+	$(CP) $(SRC_DIR)*.java -d $(BIN_DIR)
 
 run:
 	$(EX) $(FLAGS) $(BIN_DIR) $(NAME)
