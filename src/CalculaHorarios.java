@@ -11,7 +11,7 @@ public class CalculaHorarios {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
 		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		ArrayList<Semestre> semestres = new ArrayList<Semestre>();
-		int maxGenerations = 10;
+		int maxGenerations = 5000;
 
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 
@@ -48,10 +48,11 @@ public class CalculaHorarios {
 			
 		
 		for (int i = 0; i < maxGenerations ; i++)
-			
 			populacao.cruzamento();
 		
-		populacao.imprimePopulacaoComFitness();
+		//populacao.imprimePopulacaoComFitness();
+		populacao.imprimeMelhorIndividuo();
+		populacao.imprimeMelhorFitness();
 		
 	}
 	

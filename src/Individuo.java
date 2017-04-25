@@ -9,9 +9,9 @@ public class Individuo {
 	public void imprimeIndividuo(){
 		for (Fase f : fases){
 			//System.out.println(c.semestre);
-			System.out.println("semestre: "+f.nome);
+			System.out.println("Fase: "+f.nome);
 			for (Map.Entry<String, Disciplina> entry : f.horarios.entrySet()){
-			    System.out.println(entry.getKey() + "/" + entry.getValue().nome+ "/" +entry.getValue().professor.nome);
+			    System.out.println(entry.getKey() + ": " + entry.getValue().nome+ " - " +entry.getValue().professor.nome);
 			}
 		}
 	}

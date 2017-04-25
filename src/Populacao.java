@@ -8,7 +8,7 @@ public class Populacao {
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	private ArrayList<Semestre> semestres = new ArrayList<Semestre>();
 	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
-	private int quantIndividuos = 20;
+	private int quantIndividuos = 10;
 
 	public Populacao(ArrayList<Professor> professores, ArrayList<Semestre> semestres, ArrayList<Disciplina> disciplinas){
 		this.professores = professores;
@@ -94,16 +94,37 @@ public class Populacao {
 //		newInd.calculaFitness();
 //		newInd.imprimeFitness();
 		
-		if(ind1.fitness < ind2.fitness)
-			individuos.remove(index2);
-		else
-			individuos.remove(index1);
+		Collections.sort(individuos, comparaIndividuo);
 		
+//		for (Individuo i : individuos) {
+//			System.out.println("Teste: "+i.fitness);
+//		}
+		
+//		if(ind1.fitness < ind2.fitness)
+//			individuos.remove(index2);
+//		else
+//			individuos.remove(index1);
+		
+		individuos.remove(0);
 		newInd.calculaFitness();
 		individuos.add(newInd);
+		Collections.sort(individuos, comparaIndividuo);
 		
 		
 	}
+	
+	public static Comparator<Individuo> comparaIndividuo = new Comparator<Individuo>() {
+
+		@Override
+		public int compare(Individuo in1, Individuo in2) {
+			Integer fitness1 = in1.fitness;
+			Integer fitness2 = in2.fitness;
+			//descendente
+			return fitness2.compareTo(fitness1);
+		}
+
+
+	};
 	
 	
 	public void imprimePopulacaoComFitness(){
@@ -111,6 +132,14 @@ public class Populacao {
 			ind.imprimeIndividuo();
 			ind.imprimeFitness();
 		}
+	}
+	
+	public void imprimeMelhorIndividuo(){
+		individuos.get(individuos.size()-1).imprimeIndividuo();
+	}
+	
+	public void imprimeMelhorFitness(){
+		individuos.get(individuos.size()-1).imprimeFitness();
 	}
 	
 
