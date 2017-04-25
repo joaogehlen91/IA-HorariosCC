@@ -1,3 +1,13 @@
+/*
+ * Nomes: Elias Fank, João Gehlen, Ricardo Zanuzzo
+ * Disciplina: Inteligencia Artificial
+ * 
+ * 2017/1
+ * 
+ * Esta classe a classe principal do algoritmo GA.
+ * 
+ */
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

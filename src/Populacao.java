@@ -1,3 +1,14 @@
+/*
+ * Nomes: Elias Fank, João Gehlen, Ricardo Zanuzzo
+ * Disciplina: Inteligencia Artificial
+ * 
+ * 2017/1
+ * 
+ * Esta classe eh usada para gerar a populacao inicial
+ * 
+ */
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
