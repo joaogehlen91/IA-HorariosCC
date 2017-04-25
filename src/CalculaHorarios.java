@@ -11,7 +11,9 @@ public class CalculaHorarios {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
 		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		ArrayList<Semestre> semestres = new ArrayList<Semestre>();
-		int maxGenerations = 5000;
+		int numCruzamentos = 150;
+		int maxGenerations = 100;
+		int condParada = 10;
 
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 
@@ -46,13 +48,33 @@ public class CalculaHorarios {
 		Populacao populacao = new Populacao(professores, semestres, disciplinas);
 		populacao.geraPopulacao();
 			
+		Integer melhorfitness = 10000;
+		Integer melhorfitnessAnt = 0;
+		Integer countFitnes = 0;
+		Individuo melhorIndividuo = new Individuo();
 		
-		for (int i = 0; i < maxGenerations ; i++)
-			populacao.cruzamento();
 		
-		//populacao.imprimePopulacaoComFitness();
-		populacao.imprimeMelhorIndividuo();
-		populacao.imprimeMelhorFitness();
+		for (int i = 1; i < maxGenerations; i++) {
+			maxGenerations--;
+			for (int j = 0; j < numCruzamentos ; j++)
+				populacao.cruzamento();
+			
+			melhorIndividuo = populacao.getMelhorIndividuo();
+			System.out.println("Geração: "+ i + " Fitness: "+ melhorIndividuo.fitness);
+			
+			if(melhorfitness == melhorfitnessAnt)
+				countFitnes++;
+			else
+				countFitnes = 0;
+			
+			if(countFitnes > condParada) break;			
+			
+			
+			melhorfitnessAnt = melhorfitness;
+			melhorfitness = melhorIndividuo.fitness;
+		}
+			
+		melhorIndividuo.imprimeIndividuo();
 		
 	}
 	

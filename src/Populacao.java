@@ -9,9 +9,10 @@ public class Populacao {
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	private ArrayList<Semestre> semestres = new ArrayList<Semestre>();
 	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
-	private int quantIndividuos = 20;
-	private double probMutation = 0.05;
-	private double mutationRate = 0.015;
+	private int quantIndividuos = 1000;
+	private double probMutation = 0.15;
+	private double mutationRate = 0.03;
+	private int numCruzamentosporGeracao = 10; 
 
 	public Populacao(ArrayList<Professor> professores, ArrayList<Semestre> semestres, ArrayList<Disciplina> disciplinas){
 		this.professores = professores;
@@ -92,23 +93,9 @@ public class Populacao {
 			newInd.fases.add(ind2.fases.get(i));
 		}
 		newInd.fases.add(ind1.fases.get(8));
-		
-//		newInd.imprimeIndividuo();
-//		newInd.calculaFitness();
-//		newInd.imprimeFitness();
-		
-		Collections.sort(individuos, comparaIndividuo);
-		
 
-//		for (Individuo i : individuos) {
-//			System.out.println("Teste: "+i.fitness);
-//		}
-		
-//		if(ind1.fitness < ind2.fitness)
-//			individuos.remove(index2);
-//		else
-//			individuos.remove(index1);
-		
+		Collections.sort(individuos, comparaIndividuo);
+				
 		individuos.remove(0);
 
 		int muta = rand.nextInt((100 - min) + 1) + min;
@@ -152,7 +139,7 @@ public class Populacao {
 			long seed = System.nanoTime();
 			Collections.shuffle(horariosDisp, new Random(seed));
 			for (Map.Entry<String, Disciplina> entry : f.horarios.entrySet()){
-				System.out.println("horariosDisp"+ " "+f.nome+horariosDisp);
+				//System.out.println("horariosDisp"+ " "+f.nome+horariosDisp);
 				int mutaGen = rand.nextInt((100 - 0) + 1) + 0;
 				if (mutaGen <= mutationRate*100){
 					String chaveCima = horariosDisp.get(0);
@@ -213,5 +200,9 @@ public class Populacao {
 		individuos.get(individuos.size()-1).imprimeFitness();
 	}
 	
+	public Individuo getMelhorIndividuo(){
+		return individuos.get(individuos.size()-1);
+	}
+
 
 }
