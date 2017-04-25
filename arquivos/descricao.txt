@@ -1,0 +1,140 @@
+Alunos: Elias Fank; João Gehlen; Ricardo Zanuzzo
+
+* Representação dos gens dos indivı́duos:
+Um individuo é formado pelo conjunto de todas as fases de um semestre de Ciencia da Computação.
+Cada uma destas fases possui um conjunto de horarios possíveis que formam as gens do indivíduo.
+
+* Como foi feito o cruzamento entre indivı́duos:
+Para fazer o cruzamento foi feito uma seleção aleatoria de dois individuos, onde o resultado do cruzamento
+é um novo individuo intercalando as caracteristicas(fases) dos dois indivudos que cruzaram.
+
+* Como foi feita a mutação dos indivı́duos:
+Ao fazer o cruzamento de um inviduo atraves de uma probabilidade pode ou não acontecer a mutação do mesmo. Caso aconteca seus gens (horarios), são permutados entre si.
+
+* Parâmetros usados na execução do algoritmo:
+Os paramatros foram ajustados até que uma fitness apropriada fosse encontrada. Os parametros são:
+	int quantIndividuos = 1000;
+	double probMutation = 0.15;
+	double mutationRate = 0.03;
+	int numCruzamentosporGeracao = 10;
+	int numCruzamentos = 150;
+	int maxGenerations = 100;
+	int condParada = 10;
+
+
+
+* Resultado Final
+O algoritmo mostra a evolução das gerações, mostrando a melhoria da fitness.
+Quanto menor a fitnes melhor é o individuo, pois ao quebrar uma restrição o individuo é penalizado com 1000 a mais na fitness. 
+Caso aconteça uma quebra de preferencia do tipo: 
+ - "De preferência os professores não devem ministrar 4 perı́odos consecutivos no mesmo turno" o individuo é penalizado com 10 a mais na sua fitness.
+ - "De preferência os professores não devem ministras aulas no perı́odo matinal e noturno no mesmo dia" o individuo é penalizado com 2 a mais na fitness.
+ - "de preferência os professores não devem ministrar aulas nos perı́odos que eles solicitaram não ministrar aulas." o individuo é penalizado com 1 a mais na fitness.
+
+* Para compilar:
+Por SH:
+ $ ./compilar-executar.sh
+Por Makefile:
+ $ make all
+ $ make run
+
+* Exemplo de saída(Resultado Final):
+Geração: 1 Fitness: 29
+Geração: 2 Fitness: 27
+Geração: 3 Fitness: 27
+Geração: 4 Fitness: 27
+Geração: 5 Fitness: 27
+Geração: 6 Fitness: 27
+Geração: 7 Fitness: 27
+Geração: 8 Fitness: 25
+Geração: 9 Fitness: 25
+Geração: 10 Fitness: 25
+Geração: 11 Fitness: 25
+Geração: 12 Fitness: 25
+Geração: 13 Fitness: 25
+Geração: 14 Fitness: 22
+Geração: 15 Fitness: 22
+Geração: 16 Fitness: 22
+Geração: 17 Fitness: 22
+Geração: 18 Fitness: 22
+Geração: 19 Fitness: 22
+Geração: 20 Fitness: 22
+Geração: 21 Fitness: 22
+Geração: 22 Fitness: 22
+Geração: 23 Fitness: 22
+Geração: 24 Fitness: 22
+Geração: 25 Fitness: 22
+Geração: 26 Fitness: 22
+11
+Fase: V1
+11: CD - Padilha
+12: CD - Jacson
+13: II - Raquel
+14: Alg - Priscila
+15: CD - Jacson
+16: Alg - Priscila
+17: II - Raquel
+18: Alg - Guilherme
+19: CD - Jacson
+10: Alg - Priscila
+Fase: M3
+00: Prg1 - Priscila
+01: OC - Jacson
+04: OC - Jacson
+05: Prg1 - Lais
+06: ED2 - Lais
+08: ED2 - Lais
+Fase: M5
+11: BD2 - Denio
+02: BD2 - Denio
+03: IPC - Graziela
+04: ES1 - Raquel
+05: IPC - Graziela
+17: SO - Marco
+07: SO - Marco
+08: ES1 - Raquel
+09: LFA - Braulio
+10: LFA - Braulio
+Fase: M7
+00: Dist - Emilio
+11: Opt1 - Guilherme
+01: Opt2 - Andressa
+02: IA - Bins
+03: Opt1 - Guilherme
+04: TCC1 - Marco
+05: Dist - Emilio
+08: IA - Bins
+09: TCC1 - Marco
+10: Opt2 - Padilha
+Fase: N2
+22: ED1 - Lais
+23: SD - Emilio
+28: SD - Emilio
+29: ED1 - Jacson
+Fase: N4
+24: OC - Padilha
+25: BD1 - Denio
+26: Prog2 - Priscila
+27: BD1 - Denio
+28: OC - Padilha
+29: Prog2 - Lais
+Fase: N6
+24: ES2 - Graziela
+25: LFA - Braulio
+28: ES2 - Graziela
+29: LFA - Braulio
+Fase: N8
+22: Red - Pavan
+23: Opt1 - Pavan
+26: PGP - Raquel
+27: Red - Pavan
+20: PGP - Raquel
+21: Opt1 - Pavan
+Fase: N10
+23: TCC2 - Marco
+24: Opt3 - Bins
+25: Opt4 - Guilherme
+28: Opt4 - Guilherme
+20: TCC2 - Marco
+21: Opt3 - Bins
+Fitness: 22
