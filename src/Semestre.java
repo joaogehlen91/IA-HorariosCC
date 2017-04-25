@@ -1,3 +1,13 @@
+/*
+ * Nomes: Elias Fank, João Gehlen, Ricardo Zanuzzo
+ * Disciplina: Inteligencia Artificial
+ * 
+ * 2017/1
+ * 
+ * Esta classe eh usada para armazenar os semestres do arquivo de dados
+ * 
+ */
+
 import java.util.ArrayList;
 
 public class Semestre {
