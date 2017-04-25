@@ -53,7 +53,7 @@ public class CalculaHorarios {
 		Integer countFitnes = 0;
 		Individuo melhorIndividuo = new Individuo();
 		
-		
+		System.out.println();
 		for (int i = 1; i < maxGenerations; i++) {
 			maxGenerations--;
 			for (int j = 0; j < numCruzamentos ; j++)
@@ -74,8 +74,10 @@ public class CalculaHorarios {
 			melhorfitness = melhorIndividuo.fitness;
 		}
 			
+		System.out.println("\n"+"#RESULTADO#############################");
 		melhorIndividuo.imprimeIndividuo();
-		
+		System.out.println("#######################################");
+		System.out.println();
 	}
 	
 	
