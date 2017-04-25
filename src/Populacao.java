@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Random;
 
 public class Populacao {
@@ -9,6 +10,8 @@ public class Populacao {
 	private ArrayList<Semestre> semestres = new ArrayList<Semestre>();
 	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	private int quantIndividuos = 20;
+	private double probMutation = 0.05;
+	private double mutationRate = 0.015;
 
 	public Populacao(ArrayList<Professor> professores, ArrayList<Semestre> semestres, ArrayList<Disciplina> disciplinas){
 		this.professores = professores;
@@ -99,10 +102,73 @@ public class Populacao {
 		else
 			individuos.remove(index1);
 		
+		int muta = rand.nextInt((100 - min) + 1) + min;
+		if (muta <= probMutation*100)
+			newInd = mutacao(newInd);
+		
 		newInd.calculaFitness();
 		individuos.add(newInd);
 		
 		
+	}
+	
+	public Semestre getSemestre(String nome){
+		for (Semestre s: semestres){
+			if (s.nome.equals(nome))
+				return s;
+		}
+		return null;
+	}
+	
+	public Individuo mutacao(Individuo ind){
+		Random rand = new Random();
+		for (Fase f : ind.fases){
+			ArrayList <String> horariosDisp = new ArrayList<String>(getSemestre(f.nome).horDisponiveis);
+			long seed = System.nanoTime();
+			Collections.shuffle(horariosDisp, new Random(seed));
+			for (Map.Entry<String, Disciplina> entry : f.horarios.entrySet()){
+				System.out.println("horariosDisp"+ " "+f.nome+horariosDisp);
+				int mutaGen = rand.nextInt((100 - 0) + 1) + 0;
+				if (mutaGen <= mutationRate*100){
+					String chaveCima = horariosDisp.get(0);
+					String chaveBaixo = entry.getKey();
+					if (chaveCima.equals(chaveBaixo)){
+						chaveCima = horariosDisp.get(1);	
+						if(f.horarios.containsKey(chaveCima)){
+							Disciplina aux = f.horarios.get(chaveCima);
+							f.horarios.remove(chaveCima);
+							f.horarios.put(chaveCima, f.horarios.get(chaveBaixo));
+							f.horarios.remove(chaveBaixo);
+							f.horarios.put(chaveBaixo, aux);
+							horariosDisp.remove(1);
+						}else{
+							Disciplina aux = f.horarios.get(chaveBaixo);
+							f.horarios.remove(chaveBaixo);
+							f.horarios.put(chaveCima, aux);
+							horariosDisp.remove(1);
+						}
+					}else{
+						if(f.horarios.containsKey(chaveCima)){
+							Disciplina aux = f.horarios.get(chaveCima);
+							f.horarios.remove(chaveCima);
+							f.horarios.put(chaveCima, f.horarios.get(chaveBaixo));
+							f.horarios.remove(chaveBaixo);
+							f.horarios.put(chaveBaixo, aux);
+							horariosDisp.remove(0);
+						}else{
+							Disciplina aux = f.horarios.get(chaveBaixo);
+							f.horarios.remove(chaveBaixo);
+							f.horarios.put(chaveCima, aux);
+							horariosDisp.remove(0);
+						}
+						
+					}
+				}
+				return ind;
+			}
+		}
+		
+		return ind;
 	}
 	
 	
